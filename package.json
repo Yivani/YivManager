@@ -1,0 +1,82 @@
+{
+  "name": "yivmanager",
+  "displayName": "YivManager",
+  "description": "A sleek project manager that helps you organize, copy, and switch between your coding projects with ease. Created by Yivani.",
+  "version": "0.0.2",
+  "publisher": "YivManager",
+  "author": {
+    "name": "Yivani"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yivani/yivmanager"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "project manager",
+    "workspace",
+    "folders",
+    "organization",
+    "yivani"
+  ],
+  "icon": "resources/icon.png",
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "projectManager.addProject",
+        "title": "Add Current Project"
+      },
+      {
+        "command": "projectManager.openProject",
+        "title": "Open Project"
+      },
+      {
+        "command": "projectManager.copyProject",
+        "title": "Copy Project"
+      },
+      {
+        "command": "projectManager.selectTargetFolder",
+        "title": "Select Target Folder"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "projectManager.openProject",
+        "key": "ctrl+alt+p",
+        "mac": "cmd+alt+p",
+        "when": "editorFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Project Manager",
+      "properties": {
+        "projectManager.targetFolder": {
+          "type": "string",
+          "default": "",
+          "description": "Target folder for copied projects"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.0",
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^16.0.0"
+  },
+  "scripts": {
+    "watch": "tsc -watch -p ./",
+    "compile": "tsc -p ./",
+    "vscode:prepublish": "npm run compile"
+  }
+}
