@@ -72,7 +72,9 @@
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",
-    "@types/node": "^16.0.0"
+    "@types/node": "^16.0.0",
+    "@types/fs-extra": "^11.0.4",
+    "typescript": "^5.0.0"
   },
   "scripts": {
     "watch": "tsc -watch -p ./",

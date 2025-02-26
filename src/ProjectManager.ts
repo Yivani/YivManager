@@ -47,13 +47,11 @@ export class ProjectManager {
       console.log("Loading projects file:", content);
       const projects = JSON.parse(content);
 
-
       if (!Array.isArray(projects)) {
-        console.log("Invalid projects data:", projects); 
+        console.log("Invalid projects data:", projects);
         return [];
       }
 
- 
       return projects.filter((p) => fs.existsSync(p.path));
     } catch (error) {
       console.error("Error loading projects:", error);
@@ -126,7 +124,6 @@ export class ProjectManager {
     try {
       const targetPath = path.join(targetBase, name);
 
- 
       if (fs.existsSync(targetPath)) {
         vscode.window.showErrorMessage(
           `Folder "${name}" already exists in target location`
@@ -134,14 +131,11 @@ export class ProjectManager {
         return;
       }
 
-
       await fse.copy(sourcePath, targetPath, {
-        filter: (src) => {
-
+        filter: (src: string) => {
           return !src.includes("node_modules") && !src.includes(".git");
         },
       });
-
 
       const projects = this.loadProjects();
       projects.push({ name, path: targetPath });
