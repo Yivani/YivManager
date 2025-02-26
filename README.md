@@ -6,11 +6,7 @@ A powerful yet simple project management extension for VS Code, designed to brin
 
 ## 🌳 Features - Grow Your Projects with Ease
 
-<<<<<<< HEAD
-
-- # 🚀 **Seamless Project Switching** - Move between projects like a river flowing through valleys _(Ctrl+Alt+P)_
-- 🚀 **Seamless Project Switching** - Move between projects like a river flowing through valleys _(Ctrl+Alt+P)_
-  > > > > > > > cb57956 (Initial Commit)
+- 🚀 **Seamless Project Switching** - Move between projects like a river flowing through valleys *(Ctrl+Alt+P)*
 - 🌟 **Effortless Organization** - Keep your projects structured like a well-rooted tree
 - 🌱 **Smart Copying & Cloning** - Duplicate projects with meaningful names, like planting seeds for new growth
 - 🛠 **Custom Target Folder** - Control where your project copies take root
@@ -20,31 +16,16 @@ A powerful yet simple project management extension for VS Code, designed to brin
 ## 🌿 How to Use - Let Your Workflow Bloom
 
 ### 🌍 Adding Projects (Plant Your Base Structure)
-
-# <<<<<<< HEAD
-
-> > > > > > > cb57956 (Initial Commit)
-
 1. Open a project folder in VS Code
 2. Press **Ctrl+Shift+P**, type `Add Current Project`
 3. Enter a name for your project - like planting a new sapling
 
 ### 🌧️ Switching Projects (Flow Smoothly)
-
-# <<<<<<< HEAD
-
-> > > > > > > cb57956 (Initial Commit)
-
 1. Press **Ctrl+Alt+P** to open the project switcher
 2. Or click the **Projects icon** in the status bar
 3. Select your project and transition effortlessly, like wind through the trees
 
 ### 🪴 Copying Projects (Grow New Branches)
-
-# <<<<<<< HEAD
-
-> > > > > > > cb57956 (Initial Commit)
-
 1. Set a **Target Folder** using the `Select Target Folder` command - this is your fertile ground
 2. Open the project you wish to copy
 3. Use the `Copy Project` command
@@ -59,10 +40,9 @@ YivManager was created to **streamline project workflows**, allowing developers 
 Let your code flow like water, organize like the roots of an ancient tree, and expand like the vast sky.
 
 Happy coding! 🌟
-<<<<<<< HEAD
+
 
 Download Now: https://yivmanager.yivani.de/
 
-# I'm still figuring out how to post it on github so that it is updated in VS Code. ( extention ofc )
 
-> > > > > > > cb57956 (Initial Commit)
+I'm still figuring out how to post it on github so that it is updated in VS Code. ( extention ofc )
