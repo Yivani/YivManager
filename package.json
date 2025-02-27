@@ -45,6 +45,10 @@
       {
         "command": "projectManager.selectTargetFolder",
         "title": "Select Target Folder"
+      },
+      {
+        "command": "projectManager.openSettings",
+        "title": "Settings & Shortcuts"
       }
     ],
     "keybindings": [
@@ -53,15 +57,49 @@
         "key": "ctrl+alt+p",
         "mac": "cmd+alt+p",
         "when": "editorFocus"
+      },
+      {
+        "command": "projectManager.addProject",
+        "key": "ctrl+alt+a",
+        "mac": "cmd+alt+a",
+        "when": "editorFocus"
+      },
+      {
+        "command": "projectManager.copyProject",
+        "key": "ctrl+alt+c",
+        "mac": "cmd+alt+c",
+        "when": "editorFocus"
+      },
+      {
+        "command": "projectManager.selectTargetFolder",
+        "key": "ctrl+alt+t",
+        "mac": "cmd+alt+t",
+        "when": "editorFocus"
       }
     ],
     "configuration": {
-      "title": "Project Manager",
+      "title": "YivManager",
       "properties": {
         "projectManager.targetFolder": {
           "type": "string",
           "default": "",
-          "description": "Target folder for copied projects"
+          "description": "Target folder for copied projects. This folder will be used as the destination when copying projects.",
+          "scope": "machine"
+        },
+        "projectManager.showInStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show YivManager in the status bar"
+        },
+        "projectManager.keyboardShortcuts": {
+          "type": "object",
+          "default": {
+            "openProject": "ctrl+alt+p",
+            "addProject": "ctrl+alt+a",
+            "copyProject": "ctrl+alt+c",
+            "selectTargetFolder": "ctrl+alt+t"
+          },
+          "description": "Customize keyboard shortcuts for YivManager commands"
         }
       }
     }
