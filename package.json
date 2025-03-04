@@ -2,8 +2,8 @@
   "name": "yivmanager",
   "displayName": "YivManager",
   "description": "A sleek project manager that helps you organize, copy, and switch between your coding projects with ease. Created by Yivani.",
-  "version": "0.0.4",
-  "publisher": "YivManager",
+  "version": "1.0.0",
+  "publisher": "Yivani",
   "author": {
     "name": "Yivani"
   },
@@ -25,6 +25,10 @@
     "organization",
     "yivani"
   ],
+  "galleryBanner": {
+    "color": "#f0f0f0",
+    "theme": "light"
+  },
   "icon": "resources/icon.png",
   "activationEvents": [],
   "main": "./out/extension.js",
