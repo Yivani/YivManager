@@ -2,7 +2,7 @@
   "name": "yivmanager",
   "displayName": "YivManager",
   "description": "A sleek project manager that helps you organize, copy, and switch between your coding projects with ease. Created by Yivani.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "Yivani",
   "author": {
     "name": "Yivani"
@@ -33,6 +33,24 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "yivmanager",
+          "title": "YivManager",
+          "icon": "resources/sidebar-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "yivmanager": [
+        {
+          "type": "webview",
+          "id": "yivmanager.sidebar",
+          "name": "Project Tools"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "projectManager.addProject",
@@ -52,7 +70,7 @@
       },
       {
         "command": "projectManager.openSettings",
-        "title": "Settings & Shortcuts"
+        "title": "Settings"
       }
     ],
     "keybindings": [
@@ -94,16 +112,6 @@
           "type": "boolean",
           "default": true,
           "description": "Show YivManager in the status bar"
-        },
-        "projectManager.keyboardShortcuts": {
-          "type": "object",
-          "default": {
-            "openProject": "ctrl+alt+p",
-            "addProject": "ctrl+alt+a",
-            "copyProject": "ctrl+alt+c",
-            "selectTargetFolder": "ctrl+alt+t"
-          },
-          "description": "Customize keyboard shortcuts for YivManager commands"
         }
       }
     }

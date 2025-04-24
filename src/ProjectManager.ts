@@ -1,3 +1,18 @@
+/**
+ * ProjectManager.ts - Core Project Management Functionality
+ * ======================================================
+ *
+ * @copyright Copyright (c) 2023-2024 Yivani
+ * @license GPL-3.0
+ * @author Yivani
+ *
+ * This module implements the core functionality of YivManager including project
+ * storage, loading, adding, switching, and copying. It handles the interface
+ * between the extension's project data and VS Code.
+ *
+ * This program is part of YivManager and is governed by its license terms.
+ */
+
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
