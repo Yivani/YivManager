@@ -2,7 +2,7 @@
   "name": "yivmanager",
   "displayName": "YivManager",
   "description": "A sleek project manager that helps you organize, copy, and switch between your coding projects with ease. Created by Yivani.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "Yivani",
   "author": {
     "name": "Yivani"
@@ -71,6 +71,18 @@
       {
         "command": "projectManager.openSettings",
         "title": "Settings"
+      },
+      {
+        "command": "projectManager.saveAsTemplate",
+        "title": "Save Project as Template"
+      },
+      {
+        "command": "projectManager.createFromTemplate",
+        "title": "Create Project from Template"
+      },
+      {
+        "command": "projectManager.manageTemplates",
+        "title": "Manage Project Templates"
       }
     ],
     "keybindings": [
@@ -112,6 +124,13 @@
           "type": "boolean",
           "default": true,
           "description": "Show YivManager in the status bar"
+        },
+        "projectManager.cacheTTL": {
+          "type": "number",
+          "default": 300,
+          "minimum": 0,
+          "maximum": 3600,
+          "description": "Time in seconds to cache project lists before refreshing from disk (0 to disable cache)"
         }
       }
     }

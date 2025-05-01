@@ -4,7 +4,7 @@ A powerful yet simple project management extension for VS Code, designed to brin
 
 <div align="center">
 
-![YivManager](resources/banner.png)
+![YivManager](resources/jivmanager.jpg)
 
 </div>
 
@@ -13,6 +13,7 @@ A powerful yet simple project management extension for VS Code, designed to brin
 - [Installation](#-installation)
 - [How to Use](#-how-to-use---let-your-workflow-bloom)
 - [Settings & Customization](#-settings--customization)
+- [Templates](#-templates---reuse-your-project-structures)
 - [Troubleshooting](#-troubleshooting)
 - [About](#-about---inspired-by-nature-built-for-developers)
 - [License](#-license)
@@ -21,11 +22,13 @@ A powerful yet simple project management extension for VS Code, designed to brin
 
 ## 🌳 Features - Grow Your Projects with Ease
 
-- 🚀 **Seamless Project Switching** - Move between projects like a river flowing through valleys
-- 🌟 **Effortless Organization** - Keep your projects structured like a well-rooted tree
-- 🌱 **Smart Copying & Cloning** - Duplicate projects with meaningful names, like planting seeds for new growth
-- 🛠 **Custom Target Folder** - Control where your project copies take root
-- 📊 **Sidebar Integration** - Access all features from the dedicated sidebar view
+- 🚀 **Seamless Project Switching** - Move between saved projects with a single click
+- 🌟 **Intuitive Organization** - Keep your projects structured and easily accessible
+- 🌱 **Project Duplication** - Create copies of your projects with customizable settings
+- 🏗️ **Project Templates** - Save and reuse project structures across your workspace
+- 🛠 **Custom Destination Folder** - Control where your new projects are created
+- 📊 **Interactive Sidebar** - Access all features from a clean, organized sidebar
+- ⚙️ **Extensive Configuration** - Customize every aspect of the extension to fit your workflow
 
 ---
 
@@ -44,49 +47,77 @@ Alternatively, you can install it directly from the VS Code Marketplace:
 
 ## 🌿 How to Use - Let Your Workflow Bloom
 
-### 🌍 Adding Projects (Plant Your Base Structure)
+### Managing Your Projects
+
+#### 💾 Saving Projects
 1. Open a project folder in VS Code
-2. Press **Ctrl+Shift+P**, type `Add Current Project`
-3. Enter a name for your project - like planting a new sapling
-4. Your project will be saved for quick access later
+2. In the YivManager sidebar, click **Save Current Project to List**
+3. Enter a name for your project
+4. Your project will be saved for quick access
 
-### 🌧️ Switching Projects (Flow Smoothly)
-1. Open the project switcher from the command palette or sidebar
-2. Or click the **Projects icon** in the status bar
-3. Select your project and transition effortlessly, like wind through the trees
+#### 🔄 Switching Between Projects
+1. In the sidebar, click **Switch to Saved Project**
+2. Select your project from the list
+3. The selected project will open in a new window
 
-### 🪴 Copying Projects (Grow New Branches)
-1. Set a **Target Folder** using the `Select Target Folder` command - this is your fertile ground
-2. Open the project you wish to copy
-3. Use the `Copy Project` command from the command palette or sidebar
-4. Enter a new name - this will be the name of the copied project folder
+### Project Duplication
 
-### 📊 Using the Sidebar
-1. Click on the **YivManager icon** in the activity bar
-2. Access all features from the sidebar:
-   - Open Project
-   - Add Current Project
-   - Set Target Location
-   - Copy Project
-   - Settings
+1. Set a **Destination Folder** using the "Set Destination Folder" button
+2. Open the project you want to duplicate
+3. Click **Duplicate Current Project** in the sidebar
+4. Enter a name for the new project
+5. Your project will be copied to the destination folder
 
 ---
 
 ## ⚙️ Settings & Customization
 
-YivManager can be customized through VS Code's settings:
+YivManager offers extensive customization through its tabbed settings interface:
 
-| Setting                       | Description                                           | Default |
-| ----------------------------- | ----------------------------------------------------- | ------- |
-| `projectManager.targetFolder` | Default folder for copying projects                   | `""`    |
-| `projectManager.showInStatusBar` | Show YivManager in the status bar                  | `true`  |
+### General Settings
+- **Project Destination Folder** - Default location for new and copied projects
+- **Confirm before overwriting** - Safety prompt before replacing existing projects
+- **Auto-open new projects** - Automatically open newly created projects
+
+### Template Settings
+- **Default exclude patterns** - Specify files and folders to exclude from templates
+- **Confirmation options** - Control when confirmation dialogs appear
+
+### Appearance
+- **Status Bar visibility** - Show/hide YivManager in the status bar
+- **Path display options** - Show project paths in the status bar
+- **Priority settings** - Control where YivManager appears in the status bar
+
+### Advanced
+- **Cache settings** - Control how project information is cached for performance
 
 To access these settings:
-1. Open VS Code settings (Ctrl+, or Cmd+,)
-2. Search for "YivManager"
-3. Adjust settings as needed
+1. Click the **Configure YivManager** button in the sidebar
+2. Or use the command palette: `YivManager: Settings`
 
-For more detailed information on settings and customization, see the [Settings Documentation](SETTINGS.md).
+---
+
+## 🌱 Templates - Reuse Your Project Structures
+
+Templates allow you to save project structures for reuse.
+
+### Creating Templates
+1. Open the project you want to use as a template
+2. Click **Create Template from Current** in the sidebar
+3. Enter a name and description
+4. Specify files/folders to exclude (like node_modules, .git)
+
+### Creating Projects from Templates
+1. Click **Create New from Template** in the sidebar
+2. Select your template
+3. Choose a destination and name
+4. Your new project will be created with the template's structure
+
+### Managing Templates
+Use the **View & Manage Templates** button to:
+- View template details
+- Delete unused templates
+- See when templates were created
 
 ---
 
@@ -95,12 +126,15 @@ For more detailed information on settings and customization, see the [Settings D
 ### Common Issues
 
 **Issue**: Projects don't appear in the list
-**Solution**: Make sure you've added projects using the "Add Current Project" command.
+**Solution**: Make sure you've saved projects using "Save Current Project to List"
 
-**Issue**: Cannot copy project
-**Solution**: Ensure you've set a target folder using the "Select Target Folder" command.
+**Issue**: Cannot duplicate project
+**Solution**: Ensure you've set a destination folder using "Set Destination Folder"
 
-If you encounter any other issues, please [open an issue](https://github.com/yivani/yivmanager/issues) on GitHub.
+**Issue**: Template creation fails
+**Solution**: Check if you have adequate permissions for the source and destination folders
+
+For more help, please [open an issue](https://github.com/yivani/yivmanager/issues) on GitHub.
 
 ---
 

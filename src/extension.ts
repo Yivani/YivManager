@@ -2,26 +2,12 @@
  * YivManager - VS Code Project Management Extension
  * ================================================
  *
+ * @version 1.2.0
  * @copyright Copyright (c) 2023-2024 Yivani
  * @license GPL-3.0
- * @author Yivani
- * @version 1.0.0
  *
- * This extension helps you organize, copy, and switch between coding projects with ease.
- * Features include project switching, organization, and smart copying/cloning.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * Project management extension for organizing, duplicating, and switching
+ * between coding projects with template support.
  */
 
 import * as vscode from "vscode";
@@ -29,44 +15,106 @@ import { ProjectManager } from "./ProjectManager";
 import { SettingsWebview } from "./SettingsWebview";
 import { SidebarProvider } from "./SidebarProvider";
 
-let projectManager: ProjectManager;
-let settingsWebview: SettingsWebview;
+// Singleton instances
+let projectManager: ProjectManager | null = null;
+let settingsWebview: SettingsWebview | null = null;
+let sidebarProvider: SidebarProvider | null = null;
+
+// Lazy initialization functions to improve startup performance
+function getProjectManager(context: vscode.ExtensionContext): ProjectManager {
+  if (!projectManager) {
+    console.log("Lazily initializing ProjectManager");
+    projectManager = new ProjectManager(context);
+  }
+  return projectManager;
+}
+
+function getSettingsWebview(context: vscode.ExtensionContext): SettingsWebview {
+  if (!settingsWebview) {
+    console.log("Lazily initializing SettingsWebview");
+    settingsWebview = new SettingsWebview(context);
+  }
+  return settingsWebview;
+}
+
+function getSidebarProvider(context: vscode.ExtensionContext): SidebarProvider {
+  if (!sidebarProvider) {
+    console.log("Lazily initializing SidebarProvider");
+    sidebarProvider = new SidebarProvider(context.extensionUri);
+  }
+  return sidebarProvider;
+}
 
 export function activate(context: vscode.ExtensionContext) {
-  projectManager = new ProjectManager(context);
-  settingsWebview = new SettingsWebview(context);
-
-  // Initialize sidebar provider
-  const sidebarProvider = new SidebarProvider(context.extensionUri);
-
-  // Register commands
+  // Register project management commands
   context.subscriptions.push(
     vscode.commands.registerCommand("projectManager.addProject", () =>
-      projectManager.addProject()
+      getProjectManager(context).addProject()
     ),
+
     vscode.commands.registerCommand("projectManager.openProject", () =>
-      projectManager.openProject()
+      getProjectManager(context).openProject()
     ),
+
     vscode.commands.registerCommand("projectManager.copyProject", () =>
-      projectManager.copyProject()
+      getProjectManager(context).copyProject()
     ),
+
     vscode.commands.registerCommand("projectManager.selectTargetFolder", () =>
-      projectManager.selectTargetFolder()
+      getProjectManager(context).selectTargetFolder()
     ),
+
+    // Open settings panel
     vscode.commands.registerCommand("projectManager.openSettings", () => {
-      settingsWebview.show();
+      getSettingsWebview(context).show();
     }),
-    // Register sidebar webview
+
+    // Template management commands
+    vscode.commands.registerCommand("projectManager.saveAsTemplate", () =>
+      getProjectManager(context).saveAsTemplate()
+    ),
+
+    vscode.commands.registerCommand("projectManager.createFromTemplate", () =>
+      getProjectManager(context).createFromTemplate()
+    ),
+
+    vscode.commands.registerCommand("projectManager.manageTemplates", () =>
+      getProjectManager(context).manageTemplates()
+    )
+  );
+
+  // Register sidebar UI
+  context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       SidebarProvider.viewType,
-      sidebarProvider
-    ),
-    projectManager
+      getSidebarProvider(context)
+    )
   );
+
+  // Add resource cleanup
+  context.subscriptions.push({
+    dispose: () => {
+      if (projectManager) {
+        projectManager.dispose();
+      }
+      if (sidebarProvider && typeof sidebarProvider.dispose === 'function') {
+        sidebarProvider.dispose();
+      }
+    }
+  });
 }
 
 export function deactivate() {
+  // Clean up resources when extension is deactivated
   if (projectManager) {
     projectManager.dispose();
+    projectManager = null;
   }
+
+  if (sidebarProvider && typeof sidebarProvider.dispose === 'function') {
+    sidebarProvider.dispose();
+    sidebarProvider = null;
+  }
+
+  settingsWebview = null;
 }

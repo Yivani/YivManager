@@ -21,8 +21,18 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = 'yivmanager.sidebar';
 
   private _view?: vscode.WebviewView;
+  private _disposables: vscode.Disposable[] = [];
 
-  constructor(private readonly _extensionUri: vscode.Uri) {}
+  constructor(private readonly _extensionUri: vscode.Uri) {
+    // Add configuration change listener
+    this._disposables.push(
+      vscode.workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration('projectManager.targetFolder')) {
+          this._updateTargetFolder();
+        }
+      })
+    );
+  }
 
   public resolveWebviewView(
     webviewView: vscode.WebviewView,
@@ -55,8 +65,31 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         case 'openSettings':
           vscode.commands.executeCommand('projectManager.openSettings');
           break;
+        case 'getTargetFolder':
+          this._updateTargetFolder();
+          break;
+        // Add new template-related commands
+        case 'saveAsTemplate':
+          vscode.commands.executeCommand('projectManager.saveAsTemplate');
+          break;
+        case 'createFromTemplate':
+          vscode.commands.executeCommand('projectManager.createFromTemplate');
+          break;
+        case 'manageTemplates':
+          vscode.commands.executeCommand('projectManager.manageTemplates');
+          break;
       }
     });
+  }
+
+  private _updateTargetFolder() {
+    if (this._view) {
+      const targetFolder = this._getTargetFolder() || 'No target folder set';
+      this._view.webview.postMessage({
+        command: 'updateTargetFolder',
+        targetFolder: targetFolder
+      });
+    }
   }
 
   private _getHtmlForWebview(webview: vscode.Webview) {
@@ -124,34 +157,47 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
       </head>
       <body>
         <div class="section">
-          <div class="section-title">Projects</div>
+          <div class="section-title">Project Management</div>
           <button class="button" id="openProject">
-            <span class="icon">📂</span> Open Project
+            <span class="icon">📂</span> Switch to Saved Project
           </button>
           <button class="button" id="addProject">
-            <span class="icon">➕</span> Add Current Project
+            <span class="icon">➕</span> Save Current Project to List
           </button>
         </div>
 
         <div class="section">
-          <div class="section-title">Project Copying</div>
+          <div class="section-title">Project Duplication</div>
           <button class="button" id="selectTargetFolder">
-            <span class="icon">🎯</span> Set Target Location
+            <span class="icon">🎯</span> Set Destination Folder
           </button>
 
           <div id="targetPath" class="target-path">
-            Target: ${this._getTargetFolder() || 'No target folder set'}
+            Destination: ${this._getTargetFolder() || 'No destination folder set'}
           </div>
 
           <button class="button" id="copyProject">
-            <span class="icon">📋</span> Copy Project
+            <span class="icon">📋</span> Duplicate Current Project
           </button>
         </div>
 
         <div class="section">
-          <div class="section-title">Configuration</div>
+          <div class="section-title">Project Templates</div>
+          <button class="button" id="saveAsTemplate">
+            <span class="icon">💾</span> Create Template from Current
+          </button>
+          <button class="button" id="createFromTemplate">
+            <span class="icon">🌱</span> Create New from Template
+          </button>
+          <button class="button" id="manageTemplates">
+            <span class="icon">🗂️</span> View & Manage Templates
+          </button>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Options</div>
           <button class="button" id="openSettings">
-            <span class="icon">⚙️</span> Settings
+            <span class="icon">⚙️</span> Configure YivManager
           </button>
         </div>
 
@@ -173,7 +219,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 
             document.getElementById('selectTargetFolder').addEventListener('click', () => {
               vscode.postMessage({ command: 'selectTargetFolder' });
-              // Update the target path after selection (handled by extension)
+              // Request updated target folder after selection
               setTimeout(() => {
                 vscode.postMessage({ command: 'getTargetFolder' });
               }, 1000);
@@ -182,6 +228,32 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
             document.getElementById('openSettings').addEventListener('click', () => {
               vscode.postMessage({ command: 'openSettings' });
             });
+
+            // Template buttons
+            document.getElementById('saveAsTemplate').addEventListener('click', () => {
+              vscode.postMessage({ command: 'saveAsTemplate' });
+            });
+
+            document.getElementById('createFromTemplate').addEventListener('click', () => {
+              vscode.postMessage({ command: 'createFromTemplate' });
+            });
+
+            document.getElementById('manageTemplates').addEventListener('click', () => {
+              vscode.postMessage({ command: 'manageTemplates' });
+            });
+
+            // Listen for messages from the extension
+            window.addEventListener('message', event => {
+              const message = event.data;
+              switch (message.command) {
+                case 'updateTargetFolder':
+                  document.getElementById('targetPath').textContent = 'Destination: ' + message.targetFolder;
+                  break;
+              }
+            });
+
+            // Request initial target folder value
+            vscode.postMessage({ command: 'getTargetFolder' });
           }())
         </script>
       </body>
@@ -242,6 +314,15 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         }
       `;
       fs.writeFileSync(vscodeCssPath, vscodeCss);
+    }
+  }
+
+  dispose() {
+    while (this._disposables.length) {
+      const disposable = this._disposables.pop();
+      if (disposable) {
+        disposable.dispose();
+      }
     }
   }
 }
